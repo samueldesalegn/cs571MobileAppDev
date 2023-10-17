@@ -6,7 +6,7 @@ import { AntDesign } from '@expo/vector-icons';
 const About = () => {
   return (
     <View style={{ flex: 1, padding: 40 }}>
-      <Text style={styles.header}>About Page</Text>
+      <Text style={styles.header}>About Us</Text>
 
       <AntDesign name="book" size={100} style={styles.icon} color="#0066CC" /><Text style={styles.text}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

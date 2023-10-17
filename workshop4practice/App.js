@@ -6,7 +6,7 @@ import { NavigationContainer } from '@react-navigation/native'; // Import Naviga
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'; // Import createBottomTabNavigator
 import About from './components/About';
 import CoursesListScreen from './components/Home';
-import CoursesList from './components/CoursesList'; // Import CoursesList component
+
 
 const Tab = createBottomTabNavigator();
 
@@ -16,7 +16,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab.Navigator>
-        <Tab.Screen name="Courses List" component={CoursesListScreen} />
+        <Tab.Screen name="Courses List" component={CoursesListScreen} options={{
+          title: 'Courses List', // Optionally set the title for the header
+        }} />
         <Tab.Screen name="About Page" component={About} />
         
       </Tab.Navigator>

@@ -9,7 +9,7 @@ const CourseDetails = () => {
   const { courseData } = route.params;
   const { title, faculty, code, rating } = courseData
 
-  console.log(courseData);
+  // console.log(courseData);
 
   const handleAddReviewPress = () => {
     navigation.navigate('AddReview');

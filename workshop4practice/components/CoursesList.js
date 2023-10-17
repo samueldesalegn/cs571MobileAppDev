@@ -1,5 +1,5 @@
-import React from 'react';
-import { StyleSheet, Platform, SafeAreaView, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Platform, SafeAreaView, FlatList, TextInput } from 'react-native';
 import Course from './Course';
 import Header from './Header.ios';
 
@@ -15,17 +15,28 @@ const data = [
 ];
 
 export default function CoursesList() {
+  const [search, setSearch] = useState('');
+  const filteredData = data.filter((course) =>
+    course.title.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <SafeAreaView
       style={{
         flex: 1,
         backgroundColor: '#FFFFFF',
         paddingTop: Platform.OS === 'android' ? 30 : 0,
-        paddingBottom: 200,
-      }}>
+      }}
+    >
       <Header />
+      <TextInput
+        style={styles.input}
+        placeholder="Search for a course..."
+        onChangeText={setSearch}
+        value={search}
+      />
       <FlatList
-        data={data}
+        data={filteredData}
         keyExtractor={(item, index) => index.toString()}
         renderItem={({ item, index }) => <Course data={item} />}
       />
@@ -42,6 +53,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: '#ddd',
     backgroundColor: '#F5F5F5',
+    marginBottom: 10, // Add margin to separate from the list
   },
 });
 
