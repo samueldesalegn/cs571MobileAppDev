@@ -17,7 +17,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Courses List" component={CoursesListScreen} options={{
-          title: 'Courses List', // Optionally set the title for the header
+          title: 'Courses List'
         }} />
         <Tab.Screen name="About Page" component={About} />
         

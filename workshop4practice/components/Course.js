@@ -4,7 +4,8 @@ import { useNavigation } from '@react-navigation/native';
 import Stars from './Stars';
 
 const Course = ({ data }) => {
-  const { title, faculty, code, rating, description, image } = data;
+  console.log(data)
+  const { title, faculty, code, rating } = data;
   const navigation = useNavigation();
 
   const handleDetailsPress = () => {

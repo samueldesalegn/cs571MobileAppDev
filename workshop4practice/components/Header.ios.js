@@ -3,8 +3,8 @@ import { Text, View, Image, StyleSheet } from 'react-native';
 
 const Header = () => {
   return (
-    <View style={styles.headerContainer}>
-      <View style={styles.imageContainer}>
+    <View style={styles.ios}>
+      <View style={styles.ios}>
         <Image
           source={require('../images/course.png')} // Add the path to your header image
           style={styles.headerImage}
@@ -39,6 +39,13 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 20,
     color: 'white', // Adjust the text color
+  },
+  ios: {
+    paddingTop: 30,
+    fontSize: 26,
+    textAlign: 'center',
+    color: '#0066CC',
+    fontWeight: '200',
   },
 });
 

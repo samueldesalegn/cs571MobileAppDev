@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, ActivityIndicator, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Stars from './Stars'; // Import your Stars component
+import Icon from 'react-native-vector-icons/FontAwesome'; // Import FontAwesome icon
 
 const AddReview = () => {
   const navigation = useNavigation();
@@ -53,7 +53,14 @@ const AddReview = () => {
       {review.submitting ? (
         <ActivityIndicator size="large" color="#0066CC" />
       ) : (
-        <Button title="Submit Review" onPress={handleReviewSubmit} />
+        <View>
+          <Button title="Submit Review" onPress={handleReviewSubmit} />
+          <View style={styles.iconContainer}>
+            <Icon name="star" size={20} color="gold" />
+            <Icon name="star" size={20} color="gold" />
+            <Icon name="star" size={20} color="gold" />
+          </View>
+        </View>
       )}
     </View>
   );
@@ -76,9 +83,16 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     marginBottom: 10,
   },
+  iconContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginTop: 10,
+  },
 });
 
 export default AddReview;
+
 
 
 
