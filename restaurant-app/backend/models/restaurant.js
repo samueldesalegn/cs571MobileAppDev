@@ -3,11 +3,12 @@ const { ObjectId } = require('mongodb');
 const { getDb } = require('../utils/database');
 
 class Restaurant {
-  constructor(name, phone, foods = [], notes = []) {
+  constructor(name, phone, foods = [], notes = [], orders=[]) {
     this.name = name;
     this.phone = phone;
     this.foods = foods;
     this.notes = notes;
+    this.orders = orders;
   }
 
   async save() {
@@ -75,6 +76,72 @@ class Restaurant {
       }
     );
   }
+
+  static async addOrder(restaurantId, order) {
+    const db = getDb();
+  
+    try {
+      const result = await db.collection('restaurants').updateOne(
+        { _id: new ObjectId(restaurantId) },
+        { $push: { 'orders': order } }, // Assuming 'orders' is an array field in the restaurant document
+        { upsert: true } // Include the upsert option
+      );
+  
+      if (result.matchedCount === 0) {
+        throw new Error('Restaurant not found.');
+      }
+  
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  
+  static async addCart(restaurantId, cartItem) {
+    const db = getDb();
+
+    try {
+      const result = await db.collection('restaurants').updateOne(
+        { _id: new ObjectId(restaurantId) },
+        { $push: { 'cart': cartItem } } // Assuming 'cart' is an array field in the restaurant document
+      );
+
+      if (result.matchedCount === 0) {
+        throw new Error('Restaurant not found.');
+      }
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  static async checkoutCart(restaurantId) {
+    const db = getDb();
+
+    try {
+      const restaurant = await db.collection('restaurants').findOne({ _id: new ObjectId(restaurantId) });
+
+      if (!restaurant) {
+        throw new Error('Restaurant not found.');
+      }
+
+      const cartItems = restaurant.cart; // Assuming 'cart' is an array field in the restaurant document
+      // Save 'cartItems' as an order or do whatever processing you need
+      // Once the cart is checked out, you can empty it
+      const result = await db.collection('restaurants').updateOne(
+        { _id: new ObjectId(restaurantId) },
+        { $set: { 'cart': [] } }
+      );
+
+      return result;
+    } catch (error) {
+      throw error;
+    }
+  }
+  
+  
 }
 
 module.exports = Restaurant;

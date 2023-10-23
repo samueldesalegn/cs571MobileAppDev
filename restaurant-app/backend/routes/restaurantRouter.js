@@ -15,5 +15,14 @@ router.put('/:restaurantId/notes', restaurantController.addNote);
 router.patch('/:restaurantId/foods/:foodId', restaurantController.updateFood);
 router.patch('/:restaurantId/foods/:noteId', restaurantController.updateNote);
 
+router.put('/:restaurantId/orders', restaurantController.addOrder);
+router.patch('/addToCart/:restaurantId/addToCart/:foodId', restaurantController.addToCart);
+
+// Checkout the cart
+router.put('/checkoutCart/:restaurantId/checkoutCart/:foodId', restaurantController.checkoutCart);
+
+module.exports = router;
+
+
 module.exports = router;
 

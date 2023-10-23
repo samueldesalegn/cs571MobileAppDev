@@ -127,6 +127,45 @@ exports.updateNote = async (req, res) => {
   }
 };
 
+exports.addOrder = async (req, res, next) => {
+  const restaurantId = req.params.restaurantId; // Assuming you pass the restaurantId as a parameter
+  const order = req.body; // You should pass the order details in the request body
+
+  try {
+    const result = await Restaurant.addOrder(restaurantId, order);
+    res.status(200).json({ success: true, message: 'Order added successfully', data: result });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
+exports.addToCart = async (req, res) => {
+  const { restaurantId, foodId } = req.params; // Assuming both IDs are part of the request parameters
+  const { cartItem } = req.body; // Assuming cartItem is part of the request body
+
+  try {
+    const result = await Restaurant.addToCart(restaurantId, foodId, cartItem);
+    res.status(200).json({ success: true, message: 'Item added to cart successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Error adding item to cart' });
+  }
+};
+
+// Controller to checkout the cart
+exports.checkoutCart = async (req, res) => {
+  const { restaurantId, foodId } = req.params; // Assuming both IDs are part of the request parameters
+
+  try {
+    const result = await Restaurant.checkoutCart(restaurantId, foodId);
+    res.status(200).json({ success: true, message: 'Cart checked out successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Error checking out cart' });
+  }
+};
+
+
+
 
 
 

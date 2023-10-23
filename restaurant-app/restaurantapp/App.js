@@ -1,42 +1,47 @@
 import React, { useState, useEffect } from 'react';
+import { View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import HomeScreen from './components/HomeScreen';
-import AuthScreen from './components/AuthScreen';
-import UserProfile from './components/UserProfile';
+import TabNavigator from './layout/tabNav/tab';
+import GlobalContext from './context';
+import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AuthScreen from './components/profile/AuthScreen';
 
-const Tab = createBottomTabNavigator();
+const App = () => {
+  const [state, setState] = useState({ food: [], notes: [], user: false });
+  const stack = createStackNavigator();
 
-function App() {
-  const [user, setUser] = useState(null);
+  function authorization() {
+    return (
+      <stack.Navigator>
+        <stack.Screen name='login' component={AuthScreen}  options={{headerShown:false}}/>
+      </stack.Navigator>
+
+    )
+  }
 
   useEffect(() => {
     const fetchToken = async () => {
       const token = await AsyncStorage.getItem('token');
       if (token) {
-        setUser(token );
+        setState({ ...state, user: true });
       }
     };
-
     fetchToken();
   }, []);
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator>
-        {user ? (
-          <>
-            <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen name="UserProfile" component={UserProfile} options={{ headerShown: false }} />
-          </>
-        ) : (
-          <Tab.Screen name="AuthScreen" component={AuthScreen} />
-        )}
-      </Tab.Navigator>
-    </NavigationContainer>
+    <GlobalContext.Provider value={{ state, setState }}>
+      <NavigationContainer >
+
+        {!state.user ? authorization() : <TabNavigator />}
+
+        {/* <TabNavigator /> */}
+      </NavigationContainer>
+
+    </GlobalContext.Provider>
   );
-}
+};
 
 export default App;
 
