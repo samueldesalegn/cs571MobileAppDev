@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, Button, TextInput, StyleSheet } from 'react-native';
 import { addOrder } from '../../network'; // Import the addOrder function
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddOrderComponent = ({ restaurantId, token }) => {
   const [order, setOrder] = useState({
@@ -15,8 +16,10 @@ const AddOrderComponent = ({ restaurantId, token }) => {
       alert('Please enter food items, quantity, and total amount for your order.');
       return;
     }
+    const token = await AsyncStorage.getItem('token');
+    console.log("token", token);
 
-    const result = await addOrder(restaurantId, order, token);
+    const result = await addOrder(order, token);
     if (result.success) {
       alert('Order added successfully.');
       setOrder({
